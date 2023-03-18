@@ -1,11 +1,11 @@
-import { TestBed, fakeAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
-import { Author, Work } from '../models';
+import { Aphorism, Author, Work, PaginatedList } from '../models';
 
 const MOCK_AUTHOR: Author = {
   id: '1',
@@ -19,16 +19,30 @@ const MOCK_WORK: Work = {
   author: '1' as unknown as Author,
 };
 
+const MOCK_APHORISM: Aphorism = {
+  id: '1',
+  content: 'The Aphorism',
+  work: '1' as unknown as Work,
+};
+
+const MOCK_PAGINATED_LIST: PaginatedList<Aphorism> = {
+  count: 1,
+  pages: 1,
+  currentPage: 1,
+  pageSize: 10,
+  items: [{ ...MOCK_APHORISM, work: { ...MOCK_WORK, author: MOCK_AUTHOR } }],
+};
+
 function expectAnAuthorRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  const authorReq: TestRequest = httpTestingController.expectOne(
+  const authorRequest: TestRequest = httpTestingController.expectOne(
     `${service.baseUrl}/authors.json`
   );
 
-  expect(authorReq.request.method).toBe('GET');
-  authorReq.flush({ authors: [MOCK_AUTHOR] });
+  expect(authorRequest.request.method).toBe('GET');
+  authorRequest.flush({ authors: [MOCK_AUTHOR] });
 }
 
 function expectAWorkRequest(
@@ -52,7 +66,7 @@ function expectAnAphorismRequest(
   );
 
   expect(aphorismRequest.request.method).toBe('GET');
-  aphorismRequest.flush({ aphorisms: [] });
+  aphorismRequest.flush({ aphorisms: [MOCK_APHORISM] });
 }
 
 describe('ApiService', () => {
@@ -75,30 +89,30 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-
-
   it('should make an http call to authors and return an observable with an Author ', () => {
-    service.getAuthor(MOCK_AUTHOR.id).subscribe((response) => {
-      expect(response).toEqual(MOCK_AUTHOR);
+    service.getAuthor(MOCK_AUTHOR.id).subscribe((author) => {
+      expect(author).toEqual(MOCK_AUTHOR);
     });
 
     expectAnAuthorRequest(httpTestingController, service);
-
   });
 
   it('should make an http call to authors and works, cross data and return an observable with a Work ', () => {
-    service.getWork(MOCK_WORK.id).subscribe((response) => {
-      expect(response).toEqual({ ...MOCK_WORK, author: MOCK_AUTHOR });
+    service.getWork(MOCK_WORK.id).subscribe((work) => {
+      expect(work).toEqual({ ...MOCK_WORK, author: MOCK_AUTHOR });
     });
 
     expectAWorkRequest(httpTestingController, service);
     expectAnAuthorRequest(httpTestingController, service);
-
-
   });
 
+  it('should make an http call to aphorisms, authors and works, cross data and return an observable of PaginatedList<Aphorism>', () => {
+    service.getAphorisms().subscribe((aphorismList) => {
+      expect(aphorismList).toEqual(MOCK_PAGINATED_LIST);
+    });
 
-  //   it('should make an http call to aphorisms, authors and works, cross data and return an observable of PaginatedList<Aphorism>', () => {
-  //   expect(service.getAphorisms()).toBeTruthy();
-  // })
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
 });

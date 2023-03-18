@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule, CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ion-header [translucent]="true">
       <ion-toolbar>
@@ -37,7 +39,6 @@ import { IonicModule } from '@ionic/angular';
     `
       #container {
         text-align: center;
-
         position: absolute;
         left: 0;
         right: 0;
@@ -53,9 +54,7 @@ import { IonicModule } from '@ionic/angular';
       #container p {
         font-size: 16px;
         line-height: 22px;
-
         color: #8c8c8c;
-
         margin: 0;
       }
 
