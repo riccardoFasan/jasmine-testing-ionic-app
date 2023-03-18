@@ -16,6 +16,30 @@ export class ApiService {
   private readonly http: HttpClient = inject(HttpClient);
   readonly baseUrl: string = 'http://localhost:4200/assets';
 
+  getAuthor(authorId: string): Observable<Author> {
+    return this.http
+      .get(`${this.baseUrl}/authors.json`)
+      .pipe(
+        map((response: any) =>
+          response.authors.find((author: any) => author.id === authorId)
+        )
+      );
+  }
+
+  getWork(workId: string): Observable<Work> {
+    return this.http.get(`${this.baseUrl}/works.json`).pipe(
+      map((response: any) =>
+        response.works.find((work: any) => work.id === workId)
+      ),
+      switchMap((work: any) => {
+        return this.getAuthor(work.author).pipe(
+          map((author: Author) => ({ ...work, author }))
+        );
+      })
+    );
+  }
+
+
   getAphorisms(
     searchCriteria: SearchCriteria = { page: 1, pageSize: 10 }
   ): Observable<PaginatedList<Aphorism>> {
@@ -48,26 +72,6 @@ export class ApiService {
     );
   }
 
-  getWork(workId: string): Observable<Work> {
-    return this.http.get(`${this.baseUrl}/works.json`).pipe(
-      map((response: any) =>
-        response.works.find((work: any) => work.id === workId)
-      ),
-      switchMap((work: any) => {
-        return this.getAuthor(work.author).pipe(
-          map((author: Author) => ({ ...work, author }))
-        );
-      })
-    );
-  }
 
-  getAuthor(authorId: string): Observable<Author> {
-    return this.http
-      .get(`${this.baseUrl}/authors.json`)
-      .pipe(
-        map((response: any) =>
-          response.authors.find((author: any) => author.id === authorId)
-        )
-      );
-  }
+
 }
