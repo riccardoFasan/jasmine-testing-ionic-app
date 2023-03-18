@@ -115,4 +115,50 @@ describe('ApiService', () => {
     expectAWorkRequest(httpTestingController, service);
     expectAnAuthorRequest(httpTestingController, service);
   });
+
+  it('a PaginatedList<Aphorism> should have count equals to the aphorisms length', () => {
+    service.getAphorisms().subscribe((aphorismList) => {
+      expect(aphorismList.count).toEqual(MOCK_PAGINATED_LIST.items.length);
+    });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('a PaginatedList<Aphorism> should have pages equals to the ratio between the aphorsisms length and the requested pageSize', () => {
+    service.getAphorisms().subscribe((aphorismList) => {
+      expect(aphorismList.pages).toEqual(
+        Math.ceil(MOCK_PAGINATED_LIST.items.length / aphorismList.pageSize)
+      );
+    });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('a PaginatedList<Aphorism> should have currentPage equals to the requested page', () => {
+    service
+      .getAphorisms({ page: 2, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.currentPage).toEqual(2);
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('a PaginatedList<Aphorism> should have pageSize equals to the requested size', () => {
+    service
+      .getAphorisms({ page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.pageSize).toEqual(10);
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
 });
