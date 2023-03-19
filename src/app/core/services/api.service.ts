@@ -39,6 +39,23 @@ export class ApiService {
     );
   }
 
+  getAphorism(aphorismId: string): Observable<Aphorism> {
+    return this.http
+      .get<{ aphorisms: Aphorism[] }>(`${this.baseUrl}/aphorisms.json`)
+      .pipe(
+        map((response: any) =>
+          response.aphorisms.find(
+            (aphorism: Aphorism) => aphorism.id === aphorismId
+          )
+        ),
+        switchMap((aphorism: Aphorism) =>
+          this.getWork(aphorism.work as unknown as string).pipe(
+            map((work: Work) => ({ ...aphorism, work }))
+          )
+        )
+      );
+  }
+
   getAphorisms(
     searchCriteria: SearchCriteria = { page: 1, pageSize: 10 }
   ): Observable<PaginatedList<Aphorism>> {

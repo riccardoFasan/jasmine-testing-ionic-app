@@ -89,7 +89,7 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should make an http call to authors and return an observable with an Author ', () => {
+  it('should make an http call to authors and return an Observable<Author> ', () => {
     service.getAuthor(MOCK_AUTHOR.id).subscribe((author) => {
       expect(author).toEqual(MOCK_AUTHOR);
     });
@@ -97,7 +97,7 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
-  it('should make an http call to authors and works, cross data and return an observable with a Work ', () => {
+  it('should make an http call to authors and works, cross data and return an Observable<Work> ', () => {
     service.getWork(MOCK_WORK.id).subscribe((work) => {
       expect(work).toEqual({ ...MOCK_WORK, author: MOCK_AUTHOR });
     });
@@ -106,9 +106,22 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
-  it('should make an http call to aphorisms, authors and works, cross data and return an observable of PaginatedList<Aphorism>', () => {
+  it('should make an http call to aphorisms, authors and works, cross data and return an Observable<PaginatedList<Aphorism>>', () => {
     service.getAphorisms().subscribe((aphorismList) => {
       expect(aphorismList).toEqual(MOCK_PAGINATED_LIST);
+    });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('should make and http call to aphorisms, authors and works, cross data and return an Observable<Aphorism>', () => {
+    service.getAphorism(MOCK_APHORISM.id).subscribe((aphorism) => {
+      expect(aphorism).toEqual({
+        ...MOCK_APHORISM,
+        work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+      });
     });
 
     expectAnAphorismRequest(httpTestingController, service);
