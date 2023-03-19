@@ -123,7 +123,6 @@ export class ApiService {
           pages: Math.ceil(aphorisms.length / pageSize),
           currentPage,
           pageSize,
-          // TODO: make a test
           items: aphorisms.slice(
             (currentPage - 1) * pageSize,
             currentPage * pageSize
