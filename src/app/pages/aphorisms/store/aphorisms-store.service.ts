@@ -23,8 +23,22 @@ export class AphorismsStoreService
     (state) => state.searchCriteria
   );
 
-  readonly search = this.effect<SearchCriteria>(
-    pipe(tap((searchCriteria) => this.updateSearchCriteria(searchCriteria)))
+  readonly search = this.effect<string>(
+    pipe(
+      withLatestFrom(this.searchCriteria$),
+      tap(([query, searchCriteria]) =>
+        this.updateSearchCriteria({ ...searchCriteria, query })
+      )
+    )
+  );
+
+  readonly getPage = this.effect<number>(
+    pipe(
+      withLatestFrom(this.searchCriteria$),
+      tap(([page, searchCriteria]) =>
+        this.updateSearchCriteria({ ...searchCriteria, page })
+      )
+    )
   );
 
   private readonly loadAphorisms = this.effect(
