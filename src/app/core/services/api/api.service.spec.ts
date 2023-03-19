@@ -197,4 +197,49 @@ describe('ApiService', () => {
     expectAWorkRequest(httpTestingController, service);
     expectAnAuthorRequest(httpTestingController, service);
   });
+
+  it('should find an aphorism searching by its content', () => {
+    service
+      .getAphorisms({ query: MOCK_APHORISM.content, page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items).toContain({
+          ...MOCK_APHORISM,
+          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+        });
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('should find an aphorism searching by its author name', () => {
+    service
+      .getAphorisms({ query: MOCK_AUTHOR.name, page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items).toContain({
+          ...MOCK_APHORISM,
+          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+        });
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('should find an aphorism searching by its work title', () => {
+    service
+      .getAphorisms({ query: MOCK_WORK.title, page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items).toContain({
+          ...MOCK_APHORISM,
+          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+        });
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
 });

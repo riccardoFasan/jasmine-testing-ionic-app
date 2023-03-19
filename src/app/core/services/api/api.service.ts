@@ -75,7 +75,6 @@ export class ApiService {
       this.http.get<{ authors: Author[] }>(`${this.baseUrl}/authors.json`),
     ]).pipe(
       map(([aphorismsResponse, worksResponse, authorsResponse]) => {
-        const aphorisms: Aphorism[] = aphorismsResponse.aphorisms;
         const works: Work[] = worksResponse.works;
         const authors: Author[] = authorsResponse.authors;
 
@@ -90,15 +89,45 @@ export class ApiService {
         const getAuthor = (authorId: string): Author =>
           authors.find((author: Author) => author.id === authorId)!;
 
+        const matchQuery = (aphorism: Aphorism): boolean => {
+          if (!searchCriteria.query) return true;
+          const query: string = searchCriteria.query.toLowerCase();
+
+          const content: string = aphorism.content.toLowerCase();
+          if (content.includes(query)) return true;
+
+          const workTitle: string = aphorism.work.title.toLowerCase();
+          if (workTitle.toLowerCase().includes(query)) return true;
+
+          const authorName: string = aphorism.work.author.name.toLowerCase();
+          if (authorName.toLowerCase().includes(query)) return true;
+
+          return false;
+        };
+
+        const aphorisms: Aphorism[] = aphorismsResponse.aphorisms.reduce(
+          (aphorisms: Aphorism[], aphorism: Aphorism) => {
+            aphorism = {
+              ...aphorism,
+              work: getWork(aphorism.work as unknown as string),
+            };
+
+            if (!matchQuery(aphorism)) return aphorisms;
+            return [...aphorisms, aphorism];
+          },
+          []
+        );
+
         return {
           count: aphorisms.length,
           pages: Math.ceil(aphorisms.length / pageSize),
           currentPage,
           pageSize,
-          items: aphorisms.map((aphorism: Aphorism) => ({
-            ...aphorism,
-            work: getWork(aphorism.work as unknown as string),
-          })),
+          // TODO: make a test
+          items: aphorisms.slice(
+            (currentPage - 1) * pageSize,
+            currentPage * pageSize
+          ),
         };
       })
     );
