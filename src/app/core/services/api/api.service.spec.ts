@@ -5,7 +5,7 @@ import {
   TestRequest,
 } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
-import { Aphorism, Author, Work, PaginatedList } from '../models';
+import { Aphorism, Author, Work, PaginatedList } from '../../models';
 
 const MOCK_AUTHOR: Author = {
   id: '1',

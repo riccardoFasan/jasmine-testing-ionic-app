@@ -2,13 +2,15 @@ import { Routes } from '@angular/router';
 
 export const APP_ROUTES: Routes = [
   {
-    path: 'home',
+    path: 'aphorisms',
     loadChildren: () =>
-      import('./pages/home/home.routes').then((m) => m.HOME_ROUTES),
+      import('./pages/aphorisms/aphorisms.routes').then(
+        (m) => m.APHORISMS_ROUTES
+      ),
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'aphorisms',
     pathMatch: 'full',
   },
 ];

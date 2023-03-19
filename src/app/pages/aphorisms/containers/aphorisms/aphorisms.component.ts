@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-aphorisms',
   standalone: true,
   imports: [IonicModule, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -64,4 +64,4 @@ import { IonicModule } from '@ionic/angular';
     `,
   ],
 })
-export class HomeComponent {}
+export class AphorismsComponent {}

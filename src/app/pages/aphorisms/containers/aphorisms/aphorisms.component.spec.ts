@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { HomeComponent } from './home.component';
+import { AphorismsComponent } from './aphorisms.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('AphorismsComponent', () => {
+  let component: AphorismsComponent;
+  let fixture: ComponentFixture<AphorismsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent, IonicModule.forRoot()],
+      imports: [AphorismsComponent, IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(AphorismsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
