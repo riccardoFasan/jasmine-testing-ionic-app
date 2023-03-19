@@ -33,40 +33,55 @@ const MOCK_PAGINATED_LIST: PaginatedList<Aphorism> = {
   items: [{ ...MOCK_APHORISM, work: { ...MOCK_WORK, author: MOCK_AUTHOR } }],
 };
 
+function expectAReuqest(
+  httpTestingController: HttpTestingController,
+  service: ApiService,
+  url: string,
+  method: string,
+  mockResponse: any
+): void {
+  const request: TestRequest = httpTestingController.expectOne(
+    `${service.baseUrl}/${url}`
+  );
+
+  expect(request.request.method).toBe(method);
+  request.flush(mockResponse);
+}
+
 function expectAnAuthorRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  const authorRequest: TestRequest = httpTestingController.expectOne(
-    `${service.baseUrl}/authors.json`
-  );
-
-  expect(authorRequest.request.method).toBe('GET');
-  authorRequest.flush({ authors: [MOCK_AUTHOR] });
+  expectAReuqest(httpTestingController, service, 'authors.json', 'GET', {
+    authors: [MOCK_AUTHOR],
+  });
 }
 
 function expectAWorkRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  const workRequest: TestRequest = httpTestingController.expectOne(
-    `${service.baseUrl}/works.json`
-  );
-
-  expect(workRequest.request.method).toBe('GET');
-  workRequest.flush({ works: [MOCK_WORK] });
+  expectAReuqest(httpTestingController, service, 'works.json', 'GET', {
+    works: [MOCK_WORK],
+  });
 }
 
 function expectAnAphorismRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  const aphorismRequest: TestRequest = httpTestingController.expectOne(
-    `${service.baseUrl}/aphorisms.json`
-  );
+  expectAReuqest(httpTestingController, service, 'aphorisms.json', 'GET', {
+    aphorisms: [MOCK_APHORISM],
+  });
+}
 
-  expect(aphorismRequest.request.method).toBe('GET');
-  aphorismRequest.flush({ aphorisms: [MOCK_APHORISM] });
+function expectAnUpdateAphorismRequest(
+  httpTestingController: HttpTestingController,
+  service: ApiService
+): void {
+  expectAReuqest(httpTestingController, service, 'aphorisms.json', 'PUT', {
+    aphorisms: [MOCK_APHORISM],
+  });
 }
 
 describe('ApiService', () => {
@@ -89,7 +104,7 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should make an http call to authors and return an Observable<Author> ', () => {
+  it('should make a GET http call to authors and return an Observable<Author> ', () => {
     service.getAuthor(MOCK_AUTHOR.id).subscribe((author) => {
       expect(author).toEqual(MOCK_AUTHOR);
     });
@@ -97,7 +112,7 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
-  it('should make an http call to authors and works, cross data and return an Observable<Work> ', () => {
+  it('should make a GET http call to authors and works, cross data and return an Observable<Work> ', () => {
     service.getWork(MOCK_WORK.id).subscribe((work) => {
       expect(work).toEqual({ ...MOCK_WORK, author: MOCK_AUTHOR });
     });
@@ -106,7 +121,7 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
-  it('should make an http call to aphorisms, authors and works, cross data and return an Observable<PaginatedList<Aphorism>>', () => {
+  it('should make a GET http call to aphorisms, authors and works, cross data and return an Observable<PaginatedList<Aphorism>>', () => {
     service.getAphorisms().subscribe((aphorismList) => {
       expect(aphorismList).toEqual(MOCK_PAGINATED_LIST);
     });
@@ -116,7 +131,7 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
-  it('should make and http call to aphorisms, authors and works, cross data and return an Observable<Aphorism>', () => {
+  it('should make a GET http call to aphorisms, authors and works, cross data and return an Observable<Aphorism>', () => {
     service.getAphorism(MOCK_APHORISM.id).subscribe((aphorism) => {
       expect(aphorism).toEqual({
         ...MOCK_APHORISM,
@@ -127,6 +142,14 @@ describe('ApiService', () => {
     expectAnAphorismRequest(httpTestingController, service);
     expectAWorkRequest(httpTestingController, service);
     expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('should make a PUT http call to aphorisms and return an Observable<Aphorism> with same aphorism sent as body', () => {
+    service.updateAphorism(MOCK_APHORISM).subscribe((aphorism) => {
+      expect(aphorism).toEqual(MOCK_APHORISM);
+    });
+
+    expectAnUpdateAphorismRequest(httpTestingController, service);
   });
 
   it('a PaginatedList<Aphorism> should have count equals to the aphorisms length', () => {

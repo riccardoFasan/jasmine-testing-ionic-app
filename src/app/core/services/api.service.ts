@@ -56,6 +56,12 @@ export class ApiService {
       );
   }
 
+  updateAphorism(aphorism: Aphorism): Observable<Aphorism> {
+    return this.http
+      .put<Aphorism>(`${this.baseUrl}/aphorisms.json`, aphorism)
+      .pipe(map(() => aphorism));
+  }
+
   getAphorisms(
     searchCriteria: SearchCriteria = { page: 1, pageSize: 10 }
   ): Observable<PaginatedList<Aphorism>> {
