@@ -198,6 +198,18 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
+  it('a PaginatedList<Aphorism> should have items length can be less than or equal the requested size', () => {
+    service
+      .getAphorisms({ page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items.length).toBeLessThanOrEqual(10);
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
   it('should find an aphorism searching by its content', () => {
     service
       .getAphorisms({ query: MOCK_APHORISM.content, page: 1, pageSize: 10 })
