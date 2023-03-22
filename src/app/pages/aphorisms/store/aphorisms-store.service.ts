@@ -13,14 +13,24 @@ export class AphorismsStoreService
   private readonly api: ApiService = inject(ApiService);
 
   readonly aphorisms$: Observable<Aphorism[]> = this.select(
-    (state) => state.aphorisms
+    (state: AphorismsState) => state.aphorisms
   );
   readonly loading$: Observable<boolean> = this.select(
-    (state) => state.loading
+    (state: AphorismsState) => state.loading
   );
-  readonly count$: Observable<number> = this.select((state) => state.count);
-  readonly searchCriteria$: Observable<SearchCriteria> = this.select(
-    (state) => state.searchCriteria
+  readonly count$: Observable<number> = this.select(
+    (state: AphorismsState) => state.count
+  );
+  readonly query$: Observable<string | undefined> = this.select(
+    (state: AphorismsState) => state.searchCriteria.query
+  );
+
+  readonly page$: Observable<number> = this.select(
+    (state: AphorismsState) => state.searchCriteria.page
+  );
+
+  readonly pageSize$: Observable<number> = this.select(
+    (state: AphorismsState) => state.searchCriteria.pageSize
   );
 
   readonly search = this.effect<string>(
@@ -39,6 +49,10 @@ export class AphorismsStoreService
         this.updateSearchCriteria({ ...searchCriteria, page })
       )
     )
+  );
+
+  private readonly searchCriteria$: Observable<SearchCriteria> = this.select(
+    (state: AphorismsState) => state.searchCriteria
   );
 
   private readonly loadAphorisms = this.effect(

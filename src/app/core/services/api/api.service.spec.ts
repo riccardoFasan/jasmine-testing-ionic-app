@@ -84,7 +84,7 @@ function expectAnUpdateAphorismRequest(
   });
 }
 
-describe('ApiService', () => {
+describe('ApiService http request methods', () => {
   let service: ApiService;
   let httpTestingController: HttpTestingController;
 
@@ -144,12 +144,70 @@ describe('ApiService', () => {
     expectAnAuthorRequest(httpTestingController, service);
   });
 
-  it('should make a PUT http call to aphorisms and return an Observable<Aphorism> with same aphorism sent as body', () => {
+  it('should make a PUT http call to aphorisms and return an Observable<Aphorism> with the same aphorism sent as body', () => {
     service.updateAphorism(MOCK_APHORISM).subscribe((aphorism) => {
       expect(aphorism).toEqual(MOCK_APHORISM);
     });
 
     expectAnUpdateAphorismRequest(httpTestingController, service);
+  });
+
+  it('should find an aphorism searching by its content', () => {
+    service
+      .getAphorisms({ query: MOCK_APHORISM.content, page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items).toContain({
+          ...MOCK_APHORISM,
+          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+        });
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('should find an aphorism searching by its author name', () => {
+    service
+      .getAphorisms({ query: MOCK_AUTHOR.name, page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items).toContain({
+          ...MOCK_APHORISM,
+          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+        });
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+
+  it('should find an aphorism searching by its work title', () => {
+    service
+      .getAphorisms({ query: MOCK_WORK.title, page: 1, pageSize: 10 })
+      .subscribe((aphorismList) => {
+        expect(aphorismList.items).toContain({
+          ...MOCK_APHORISM,
+          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
+        });
+      });
+
+    expectAnAphorismRequest(httpTestingController, service);
+    expectAWorkRequest(httpTestingController, service);
+    expectAnAuthorRequest(httpTestingController, service);
+  });
+});
+
+describe("ApiService's  PaginatedList<Aphorism>", () => {
+  let service: ApiService;
+  let httpTestingController: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
+    service = TestBed.inject(ApiService);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('a PaginatedList<Aphorism> should have count equals to the aphorisms length', () => {
@@ -203,51 +261,6 @@ describe('ApiService', () => {
       .getAphorisms({ page: 1, pageSize: 10 })
       .subscribe((aphorismList) => {
         expect(aphorismList.items.length).toBeLessThanOrEqual(10);
-      });
-
-    expectAnAphorismRequest(httpTestingController, service);
-    expectAWorkRequest(httpTestingController, service);
-    expectAnAuthorRequest(httpTestingController, service);
-  });
-
-  it('should find an aphorism searching by its content', () => {
-    service
-      .getAphorisms({ query: MOCK_APHORISM.content, page: 1, pageSize: 10 })
-      .subscribe((aphorismList) => {
-        expect(aphorismList.items).toContain({
-          ...MOCK_APHORISM,
-          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
-        });
-      });
-
-    expectAnAphorismRequest(httpTestingController, service);
-    expectAWorkRequest(httpTestingController, service);
-    expectAnAuthorRequest(httpTestingController, service);
-  });
-
-  it('should find an aphorism searching by its author name', () => {
-    service
-      .getAphorisms({ query: MOCK_AUTHOR.name, page: 1, pageSize: 10 })
-      .subscribe((aphorismList) => {
-        expect(aphorismList.items).toContain({
-          ...MOCK_APHORISM,
-          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
-        });
-      });
-
-    expectAnAphorismRequest(httpTestingController, service);
-    expectAWorkRequest(httpTestingController, service);
-    expectAnAuthorRequest(httpTestingController, service);
-  });
-
-  it('should find an aphorism searching by its work title', () => {
-    service
-      .getAphorisms({ query: MOCK_WORK.title, page: 1, pageSize: 10 })
-      .subscribe((aphorismList) => {
-        expect(aphorismList.items).toContain({
-          ...MOCK_APHORISM,
-          work: { ...MOCK_WORK, author: MOCK_AUTHOR },
-        });
       });
 
     expectAnAphorismRequest(httpTestingController, service);

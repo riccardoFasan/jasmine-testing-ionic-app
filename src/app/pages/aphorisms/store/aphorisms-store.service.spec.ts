@@ -76,7 +76,7 @@ const MOCK_APHORISMS_LIST = {
   items: MOCK_APHORISMS,
 };
 
-describe('AphorismsStoreService init', () => {
+describe('AphorismsStoreService initialization', () => {
   let service: AphorismsStoreService;
   let api: ApiService;
 
@@ -126,13 +126,24 @@ describe('AphorismsStoreService init', () => {
     });
   });
 
-  it('should have page 1 and pageSize 10 as initial search criteria', () => {
-    service.searchCriteria$
-      .pipe(first())
-      .subscribe((searchCriteria: SearchCriteria) => {
-        expect(searchCriteria).toBeTruthy();
-        expect(searchCriteria).toEqual({ page: 1, pageSize: 10 });
-      });
+  it('should have 1 as initial page', () => {
+    service.page$.pipe(first()).subscribe((page: number) => {
+      expect(page).toBeTruthy();
+      expect(page).toEqual(1);
+    });
+  });
+
+  it('should have 10 as initial pageSize', () => {
+    service.pageSize$.pipe(first()).subscribe((pageSize: number) => {
+      expect(pageSize).toBeTruthy();
+      expect(pageSize).toEqual(10);
+    });
+  });
+
+  it('should have undefined as initial query', () => {
+    service.query$.pipe(first()).subscribe((query: string | undefined) => {
+      expect(query).toBeUndefined();
+    });
   });
 
   it('should load the first page of aphorisms on store init', () => {
@@ -145,19 +156,14 @@ describe('AphorismsStoreService init', () => {
       expect(aphorisms).toEqual(MOCK_INITIAL_APHORISMS);
     });
 
-    service.searchCriteria$
-      .pipe(
-        first(),
-        map((searchCriteria: SearchCriteria) => searchCriteria.page)
-      )
-      .subscribe((page: number) => {
-        expect(page).toBeDefined();
-        expect(page).toEqual(1);
-      });
+    service.page$.pipe(first()).subscribe((page: number) => {
+      expect(page).toBeDefined();
+      expect(page).toEqual(1);
+    });
   });
 });
 
-describe('AphorismsStoreService search', () => {
+describe('AphorismsStoreService load methods', () => {
   let service: AphorismsStoreService;
   let api: ApiService;
 
@@ -196,15 +202,10 @@ describe('AphorismsStoreService search', () => {
       expect(aphorisms).toEqual(MOCK_APHORISMS);
     });
 
-    service.searchCriteria$
-      .pipe(
-        first(),
-        map((searchCriteria: SearchCriteria) => searchCriteria.page)
-      )
-      .subscribe((page: number) => {
-        expect(page).toBeDefined();
-        expect(page).toEqual(MOCK_SEARCH_CRITERIA.page);
-      });
+    service.page$.pipe(first()).subscribe((page: number) => {
+      expect(page).toBeDefined();
+      expect(page).toEqual(MOCK_SEARCH_CRITERIA.page);
+    });
   });
 
   it('should load a page of aphorisms on query changed', () => {
@@ -223,14 +224,9 @@ describe('AphorismsStoreService search', () => {
       expect(aphorisms).toEqual(MOCK_APHORISMS);
     });
 
-    service.searchCriteria$
-      .pipe(
-        first(),
-        map((searchCriteria: SearchCriteria) => searchCriteria.query)
-      )
-      .subscribe((page?: string) => {
-        expect(page).toBeDefined();
-        expect(page).toEqual(MOCK_SEARCH_CRITERIA.query);
-      });
+    service.query$.pipe(first()).subscribe((query?: string) => {
+      expect(query).toBeDefined();
+      expect(query).toEqual(MOCK_SEARCH_CRITERIA.query);
+    });
   });
 });
