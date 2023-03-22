@@ -33,6 +33,10 @@ export class AphorismsStoreService
     (state: AphorismsState) => state.searchCriteria.pageSize
   );
 
+  private readonly searchCriteria$: Observable<SearchCriteria> = this.select(
+    (state: AphorismsState) => state.searchCriteria
+  );
+
   readonly search = this.effect<string>(
     pipe(
       withLatestFrom(this.searchCriteria$),
@@ -49,10 +53,6 @@ export class AphorismsStoreService
         this.updateSearchCriteria({ ...searchCriteria, page })
       )
     )
-  );
-
-  private readonly searchCriteria$: Observable<SearchCriteria> = this.select(
-    (state: AphorismsState) => state.searchCriteria
   );
 
   private readonly loadAphorisms = this.effect(
