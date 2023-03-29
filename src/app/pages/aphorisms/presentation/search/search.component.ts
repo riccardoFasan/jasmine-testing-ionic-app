@@ -29,8 +29,7 @@ export class SearchComponent {
   @Output() queryChange: EventEmitter<string> = new EventEmitter<string>();
 
   protected search(event: Event): void {
-    const query: string = (event as unknown as CustomEvent).detail.value;
-    if (!query) return;
+    const query: string = (event as unknown as CustomEvent).detail.value || '';
     this.queryChange.emit(query);
   }
 }

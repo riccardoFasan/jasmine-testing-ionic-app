@@ -37,7 +37,7 @@ import { ListComponent, SearchComponent } from '../../presentation';
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding" [fullscreen]="true" [scrollY]="false">
+      <ion-content class="ion-padding" [fullscreen]="true">
         <app-list
           [aphorisms]="vm.aphorisms!"
           [count]="vm.count!"
@@ -45,6 +45,7 @@ import { ListComponent, SearchComponent } from '../../presentation';
           [pages]="vm.pages!"
           [loading]="vm.loading!"
           [pageSize]="vm.pageSize!"
+          [query]="vm.query!"
           (pageChange)="onPageChange($event)"
         ></app-list>
       </ion-content>

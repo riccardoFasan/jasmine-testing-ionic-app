@@ -2,9 +2,27 @@
   "works": [
     {
       "id": "1",
-      "title": "Lettere a Lucilio",
+      "title": "Epistulae Morales ad Lucilium",
       "year": 60,
       "author": "1"
+    },
+    {
+      "id": "2",
+      "title": "Heautontimorumenos",
+      "year": -163,
+      "author": "2"
+    },
+    {
+      "id": "3",
+      "title": "De Bello Civile",
+      "year": -46,
+      "author": "3"
+    },
+    {
+      "id": "4",
+      "title": "Quaestiones convivales",
+      "year": 100,
+      "author": "4"
     }
   ]
 }

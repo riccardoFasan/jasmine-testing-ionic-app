@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { Observable, forkJoin, map, switchMap, timer } from 'rxjs';
 import {
   Aphorism,
   Author,

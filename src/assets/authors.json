@@ -3,6 +3,18 @@
     {
       "id": "1",
       "name": "Seneca"
+    },
+    {
+      "id": "2",
+      "name": "Terentius"
+    },
+    {
+      "id": "3",
+      "name": "Caius Julius Caesar"
+    },
+    {
+      "id": "4",
+      "name": "Plutarcus"
     }
   ]
 }

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SearchComponent } from './search.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -26,17 +25,10 @@ describe('SearchComponent', () => {
   });
 
   it('should emit queryChange event when the user types in the search bar', () => {
-    const changeSpy = spyOn(component.queryChange, 'emit');
+    const changeSpy: jasmine.Spy = spyOn(component.queryChange, 'emit');
     input.triggerEventHandler('ionChange', { detail: { value: MOCK_QUERY } });
     fixture.detectChanges();
     expect(changeSpy).toHaveBeenCalled();
     expect(changeSpy).toHaveBeenCalledWith(MOCK_QUERY);
-  });
-
-  it('should not emit queryChange event when the search value is an empty string', () => {
-    const changeSpy = spyOn(component.queryChange, 'emit');
-    input.triggerEventHandler('ionChange', { detail: { value: '' } });
-    fixture.detectChanges();
-    expect(changeSpy).not.toHaveBeenCalled();
   });
 });
