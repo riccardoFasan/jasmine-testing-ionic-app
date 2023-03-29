@@ -5,33 +5,12 @@ import {
   TestRequest,
 } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
-import { Aphorism, Author, Work, PaginatedList } from '../../models';
-
-const MOCK_AUTHOR: Author = {
-  id: '1',
-  name: 'John Doe',
-};
-
-const MOCK_WORK: Work = {
-  id: '1',
-  title: 'The Work',
-  year: 2020,
-  author: '1' as unknown as Author,
-};
-
-const MOCK_APHORISM: Aphorism = {
-  id: '1',
-  content: 'The Aphorism',
-  work: '1' as unknown as Work,
-};
-
-const MOCK_PAGINATED_LIST: PaginatedList<Aphorism> = {
-  count: 1,
-  pages: 1,
-  currentPage: 1,
-  pageSize: 10,
-  items: [{ ...MOCK_APHORISM, work: { ...MOCK_WORK, author: MOCK_AUTHOR } }],
-};
+import {
+  MOCK_APHORISM,
+  MOCK_AUTHOR,
+  MOCK_PAGINATED_LIST,
+  MOCK_WORK,
+} from 'src/mocks';
 
 function expectAReuqest(
   httpTestingController: HttpTestingController,

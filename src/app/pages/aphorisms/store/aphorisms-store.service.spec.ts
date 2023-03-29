@@ -1,80 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { AphorismsStoreService } from './aphorisms-store.service';
-import { Aphorism, SearchCriteria } from '@app/core/models';
-import { first, map, of } from 'rxjs';
+import { Aphorism } from '@app/core/models';
+import { first, of } from 'rxjs';
 import { ApiService } from '@app/core/services';
-
-const MOCK_INITIAL_SEARCH_CRITERIA: SearchCriteria = {
-  page: 1,
-  pageSize: 10,
-};
-
-const MOCK_INITIAL_APHORISMS: Aphorism[] = [
-  {
-    id: '1',
-    content: 'content 1',
-    work: {
-      id: '1',
-      title: 'title 1',
-      year: 2000,
-      author: {
-        id: '1',
-        name: 'name 1',
-      },
-    },
-  },
-];
-
-const MOCK_INITIAL_APHORISMS_LIST = {
-  count: 1,
-  pages: 1,
-  currentPage: 1,
-  pageSize: 10,
-  items: MOCK_INITIAL_APHORISMS,
-};
-
-const MOCK_SEARCH_CRITERIA: SearchCriteria = {
-  page: 2,
-  pageSize: 2,
-  query: 'content',
-};
-
-const MOCK_APHORISMS: Aphorism[] = [
-  {
-    id: '1',
-    content: 'content 1',
-    work: {
-      id: '1',
-      title: 'title 1',
-      year: 2000,
-      author: {
-        id: '1',
-        name: 'name 1',
-      },
-    },
-  },
-  {
-    id: '1',
-    content: 'content 1',
-    work: {
-      id: '1',
-      title: 'title 1',
-      year: 2000,
-      author: {
-        id: '1',
-        name: 'name 1',
-      },
-    },
-  },
-];
-
-const MOCK_APHORISMS_LIST = {
-  count: 4,
-  pages: 2,
-  currentPage: 2,
-  pageSize: 2,
-  items: MOCK_APHORISMS,
-};
+import {
+  MOCK_APHORISMS,
+  MOCK_APHORISMS_LIST,
+  MOCK_INITIAL_APHORISMS,
+  MOCK_INITIAL_APHORISMS_LIST,
+  MOCK_INITIAL_SEARCH_CRITERIA,
+  MOCK_SEARCH_CRITERIA,
+} from 'src/mocks';
 
 describe('AphorismsStoreService initialization', () => {
   let service: AphorismsStoreService;

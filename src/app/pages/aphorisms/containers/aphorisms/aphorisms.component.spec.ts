@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { AphorismsComponent } from './aphorisms.component';
 import { AphorismsStoreService } from '../../store';
 import { HttpClientModule } from '@angular/common/http';
+import { MOCK_PAGE, MOCK_QUERY } from 'src/mocks';
 
 describe('AphorismsComponent', () => {
   let component: AphorismsComponent;
@@ -32,13 +33,11 @@ describe('AphorismsComponent', () => {
   });
 
   it('should load a page of aphorisms on page change', () => {
-    const MOCK_PAGE: number = 2;
     component.onPageChange(MOCK_PAGE);
     expect(store.getPage).toHaveBeenCalled();
   });
 
   it('should load a page of aphorisms on query change', () => {
-    const MOCK_QUERY: string = 'content';
     component.onQueryChange(MOCK_QUERY);
     expect(store.search).toHaveBeenCalledWith(MOCK_QUERY);
   });
