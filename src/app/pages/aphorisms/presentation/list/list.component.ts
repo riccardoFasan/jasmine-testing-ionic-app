@@ -19,22 +19,18 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { InfiniteScrollCustomEvent, IonicModule } from '@ionic/angular';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, CardComponent, IonicModule],
   template: `
     <ion-content *ngIf="{ aphorisms: aphorisms$ | async } as vm">
-      <ion-card *ngFor="let aphorism of vm.aphorisms">
-        <ion-card-header>
-          <ion-card-title>{{ aphorism.work.author.name }}</ion-card-title>
-          <ion-card-subtitle>{{ aphorism.work.title }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          {{ aphorism.content }}
-        </ion-card-content>
-      </ion-card>
+      <app-card
+        *ngFor="let aphorism of vm.aphorisms"
+        [aphorism]="aphorism"
+      ></app-card>
       <ion-infinite-scroll
         [disabled]="count === vm.aphorisms!.length"
         (ionInfinite)="onScroll($any($event))"
