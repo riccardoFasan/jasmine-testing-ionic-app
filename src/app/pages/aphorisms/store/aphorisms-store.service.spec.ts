@@ -55,10 +55,17 @@ describe('AphorismsStoreService initialization', () => {
     });
   });
 
-  it('should have count as 0 as initial state', () => {
+  it('should have 0 as initial count', () => {
     service.count$.pipe(first()).subscribe((count: number) => {
       expect(count).toBeDefined();
       expect(count).toEqual(0);
+    });
+  });
+
+  it('should have 0 as initial pages', () => {
+    service.pages$.pipe(first()).subscribe((pages: number) => {
+      expect(pages).toBeDefined();
+      expect(pages).toEqual(0);
     });
   });
 

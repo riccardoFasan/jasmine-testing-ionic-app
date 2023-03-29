@@ -15,12 +15,19 @@ export class AphorismsStoreService
   readonly aphorisms$: Observable<Aphorism[]> = this.select(
     (state: AphorismsState) => state.aphorisms
   );
+
   readonly loading$: Observable<boolean> = this.select(
     (state: AphorismsState) => state.loading
   );
+
   readonly count$: Observable<number> = this.select(
     (state: AphorismsState) => state.count
   );
+
+  readonly pages$: Observable<number> = this.select(
+    (state: AphorismsState) => state.pages
+  );
+
   readonly query$: Observable<string | undefined> = this.select(
     (state: AphorismsState) => state.searchCriteria.query
   );
@@ -65,6 +72,7 @@ export class AphorismsStoreService
         tap((aphorismsList: PaginatedList<Aphorism>) => {
           this.updateAphorisms(aphorismsList.items);
           this.updateCount(aphorismsList.count);
+          this.updatePages(aphorismsList.pages);
           this.updateLoading(false);
         })
       )
@@ -88,6 +96,13 @@ export class AphorismsStoreService
     (state: AphorismsState, count: number): AphorismsState => ({
       ...state,
       count,
+    })
+  );
+
+  private readonly updatePages = this.updater(
+    (state: AphorismsState, pages: number): AphorismsState => ({
+      ...state,
+      pages,
     })
   );
 

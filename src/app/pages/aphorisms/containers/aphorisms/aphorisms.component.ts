@@ -5,12 +5,12 @@ import { AphorismsStoreService } from '../../store';
 import { provideComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { Aphorism } from '@app/core/models';
-import { SearchComponent } from '../../presentation';
+import { ListComponent, SearchComponent } from '../../presentation';
 
 @Component({
   selector: 'app-aphorisms',
   standalone: true,
-  imports: [IonicModule, CommonModule, SearchComponent],
+  imports: [IonicModule, CommonModule, SearchComponent, ListComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideComponentStore(AphorismsStoreService)],
   template: `
@@ -19,6 +19,7 @@ import { SearchComponent } from '../../presentation';
         aphorisms: aphorisms$ | async,
         loading: loading$ | async,
         count: count$ | async,
+        pages: pages$ | async,
         query: query$ | async,
         page: page$ | async,
         pageSize: pageSize$ | async
@@ -36,8 +37,16 @@ import { SearchComponent } from '../../presentation';
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding" [fullscreen]="true">
-        <!-- TODO: cards list with count, page, loading, aphorisms and pageSize inputs and pageChange output  -->
+      <ion-content class="ion-padding" [fullscreen]="true" [scrollY]="false">
+        <app-list
+          [aphorisms]="vm.aphorisms!"
+          [count]="vm.count!"
+          [page]="vm.page!"
+          [pages]="vm.pages!"
+          [loading]="vm.loading!"
+          [pageSize]="vm.pageSize!"
+          (pageChange)="onPageChange($event)"
+        ></app-list>
       </ion-content>
     </ng-container>
   `,
@@ -49,6 +58,7 @@ export class AphorismsComponent {
   protected readonly aphorisms$: Observable<Aphorism[]> = this.store.aphorisms$;
   protected readonly loading$: Observable<boolean> = this.store.loading$;
   protected readonly count$: Observable<number> = this.store.count$;
+  protected readonly pages$: Observable<number> = this.store.pages$;
   protected readonly query$: Observable<string | undefined> = this.store.query$;
   protected readonly page$: Observable<number> = this.store.page$;
   protected readonly pageSize$: Observable<number> = this.store.pageSize$;
