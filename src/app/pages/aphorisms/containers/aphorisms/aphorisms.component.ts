@@ -5,22 +5,16 @@ import { AphorismsStoreService } from '../../store';
 import { provideComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { Aphorism } from '@app/core/models';
+import { SearchComponent } from '../../presentation';
 
 @Component({
   selector: 'app-aphorisms',
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, SearchComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideComponentStore(AphorismsStoreService)],
   template: `
-    <ion-header [translucent]="true">
-      <ion-toolbar>
-        <ion-title> Aphorisms </ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content
-      [fullscreen]="true"
+    <ng-container
       *ngIf="{
         aphorisms: aphorisms$ | async,
         loading: loading$ | async,
@@ -30,16 +24,22 @@ import { Aphorism } from '@app/core/models';
         pageSize: pageSize$ | async
       } as vm"
     >
-      <ion-header collapse="condense">
+      <ion-header [translucent]="true">
         <ion-toolbar>
-          <ion-title size="large">Aphorisms</ion-title>
+          <ion-title> Aphorisms </ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <app-search
+            [query]="vm.query!"
+            (queryChange)="onQueryChange($event)"
+          ></app-search>
         </ion-toolbar>
       </ion-header>
 
-      <!-- TODO: search component with queryChange output and query input  -->
-
-      <!-- TODO: cards list with count, page, loading, aphorisms and pageSize inputs and pageChange output  -->
-    </ion-content>
+      <ion-content class="ion-padding" [fullscreen]="true">
+        <!-- TODO: cards list with count, page, loading, aphorisms and pageSize inputs and pageChange output  -->
+      </ion-content>
+    </ng-container>
   `,
   styles: [],
 })
