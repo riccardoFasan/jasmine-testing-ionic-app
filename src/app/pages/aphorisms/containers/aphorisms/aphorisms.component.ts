@@ -5,22 +5,12 @@ import { AphorismsStoreService } from '../../store';
 import { provideComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { Aphorism } from '@app/core/models';
-import {
-  ListComponent,
-  RefresherComponent,
-  SearchComponent,
-} from '../../presentation';
+import { ListComponent, SearchComponent } from '../../presentation';
 
 @Component({
   selector: 'app-aphorisms',
   standalone: true,
-  imports: [
-    IonicModule,
-    CommonModule,
-    SearchComponent,
-    ListComponent,
-    RefresherComponent,
-  ],
+  imports: [IonicModule, CommonModule, SearchComponent, ListComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideComponentStore(AphorismsStoreService)],
   template: `
@@ -47,11 +37,7 @@ import {
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding" [fullscreen]="true">
-        <app-refresher
-          [loading]="!!vm.loading"
-          (refresh)="onRefresh()"
-        ></app-refresher>
+      <ion-content [fullscreen]="true">
         <app-list
           [aphorisms]="vm.aphorisms!"
           [count]="vm.count!"
@@ -84,9 +70,5 @@ export class AphorismsComponent {
 
   protected onQueryChange(query: string): void {
     this.store.search(query);
-  }
-
-  protected onRefresh(): void {
-    this.store.getPage(1);
   }
 }

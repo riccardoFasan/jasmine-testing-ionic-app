@@ -9,6 +9,7 @@ describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
   let infiniteScroll: DebugElement;
+  let refresher: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -73,5 +74,12 @@ describe('ListComponent', () => {
     fixture.detectChanges();
 
     expect(changeSpy).not.toHaveBeenCalled();
+  });
+
+  it('should load the fisrt page of aphorisms on page refresh', () => {
+    const changeSpy: jasmine.Spy = spyOn(component.pageChange, 'emit');
+    refresher = fixture.debugElement.query(By.css('ion-refresher'));
+    refresher.triggerEventHandler('ionRefresh');
+    expect(changeSpy).toHaveBeenCalledWith(1);
   });
 });

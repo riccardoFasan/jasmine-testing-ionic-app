@@ -12,7 +12,6 @@ describe('AphorismsComponent', () => {
   let fixture: ComponentFixture<AphorismsComponent>;
   let store: AphorismsStoreService;
   let searchbar: DebugElement;
-  let refresher: DebugElement;
   let list: DebugElement;
 
   beforeEach(async () => {
@@ -41,12 +40,6 @@ describe('AphorismsComponent', () => {
     searchbar = fixture.debugElement.query(By.css('app-search'));
     searchbar.triggerEventHandler('queryChange', MOCK_QUERY);
     expect(store.search).toHaveBeenCalledWith(MOCK_QUERY);
-  });
-
-  it('should load the fisrt page of aphorisms on page refresh', () => {
-    refresher = fixture.debugElement.query(By.css('app-refresher'));
-    refresher.triggerEventHandler('refresh');
-    expect(store.getPage).toHaveBeenCalledWith(1);
   });
 
   it('should load a page of aphorisms on page change', () => {
