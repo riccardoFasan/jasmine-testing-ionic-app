@@ -9,15 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Aphorism } from '@app/core/models';
-import {
-  BehaviorSubject,
-  Subject,
-  combineLatest,
-  filter,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil, tap } from 'rxjs';
 import {
   InfiniteScrollCustomEvent,
   IonicModule,
@@ -32,9 +24,12 @@ import { CardComponent } from '../card/card.component';
   template: `
     <ion-content>
       <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
-        <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       <ng-container *ngIf="{ aphorisms: aphorisms$ | async } as vm">
+        <ion-spinner
+          *ngIf="loading && vm.aphorisms!.length === 0"
+          name="crescent"
+        ></ion-spinner>
         <app-card
           *ngFor="let aphorism of vm.aphorisms"
           [aphorism]="aphorism"
@@ -43,7 +38,9 @@ import { CardComponent } from '../card/card.component';
           [disabled]="count === vm.aphorisms!.length"
           (ionInfinite)="onScroll($any($event))"
         >
-          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          <ion-infinite-scroll-content
+            loadingSpinner="crescent"
+          ></ion-infinite-scroll-content>
         </ion-infinite-scroll>
       </ng-container>
     </ion-content>
@@ -51,7 +48,13 @@ import { CardComponent } from '../card/card.component';
   styles: [
     `
       ion-spinner {
+        width: 100%;
         text-align: center;
+        margin: 60px 0 0.25rem 0; // 60px same as ion-refresher height
+      }
+
+      ion-refresher.refresher-active + ion-spinner {
+        margin-top: 0;
       }
     `,
   ],
@@ -62,11 +65,7 @@ export class ListComponent implements OnInit, OnDestroy {
   @Input() page: number = 0;
   @Input() pages: number = 0;
   @Input() pageSize: number = 0;
-
-  @Input() set loading(loading: boolean) {
-    if (loading) return;
-    this.pageLoaded$.next();
-  }
+  @Input() loading: boolean = false;
 
   @Input() set aphorisms(aphorismsPage: Aphorism[]) {
     if (!aphorismsPage) return;
@@ -77,6 +76,7 @@ export class ListComponent implements OnInit, OnDestroy {
       ),
     ];
     this.aphorisms$.next(aphorisms);
+    this.pageLoaded$.next();
   }
 
   @Input() set query(query: string) {
@@ -92,28 +92,26 @@ export class ListComponent implements OnInit, OnDestroy {
 
   private readonly pageLoaded$: Subject<void> = new Subject<void>();
   private readonly destroy$: Subject<void> = new Subject<void>();
-  private readonly scrollEvent$: Subject<InfiniteScrollCustomEvent> =
-    new Subject<InfiniteScrollCustomEvent>();
-  private readonly refreshEvent$: Subject<RefresherCustomEvent> =
-    new Subject<RefresherCustomEvent>();
+
+  private scrollEvent: InfiniteScrollCustomEvent | null = null;
+  private refreshEvent: RefresherCustomEvent | null = null;
 
   ngOnInit(): void {
     this.pageLoaded$
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(() =>
-          combineLatest([
-            this.refreshEvent$.pipe(
-              filter((event) => !!event),
-              tap((event: any) => event!.target!.complete())
-            ),
-            this.scrollEvent$.pipe(
-              filter((event) => !!event),
-              tap((event: any) => event!.target!.complete())
-            ),
-          ])
-        )
+        tap(() => {
+          if (this.refreshEvent) {
+            this.refreshEvent.target.complete();
+            this.refreshEvent = null;
+          }
+          if (this.scrollEvent) {
+            this.scrollEvent.target.complete();
+            this.scrollEvent = null;
+          }
+        })
       )
+
       .subscribe();
   }
 
@@ -123,13 +121,13 @@ export class ListComponent implements OnInit, OnDestroy {
 
   protected onRefresh(event: RefresherCustomEvent): void {
     this.aphorisms$.next([]);
-    this.refreshEvent$.next(event);
+    this.refreshEvent = event;
     this.pageChange.emit(1);
   }
 
   protected onScroll(event: InfiniteScrollCustomEvent): void {
     if (!this.canChangePage) return;
-    this.scrollEvent$.next(event);
+    this.scrollEvent = event;
     this.pageChange.emit(this.page + 1);
   }
 

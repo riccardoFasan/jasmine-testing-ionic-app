@@ -11,12 +11,18 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { RouteReuseStrategy } from '@angular/router';
 import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { DelayInterceptor } from '@app/core/interceptors';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(APP_ROUTES, withPreloading(PreloadAllModules)),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(IonicModule.forRoot(), HttpClientModule),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: DelayInterceptor,
+      multi: true,
+    },
   ],
 }).catch((err) => console.error(err));
