@@ -9,6 +9,7 @@ import { Aphorism } from '@app/core/models';
   imports: [CommonModule, IonicModule],
   template: `
     <ion-card *ngIf="aphorism">
+      <img alt="Silhouette of mountains" [src]="aphorism.image" />
       <ion-card-content>
         <blockquote>
           {{ aphorism.content }}

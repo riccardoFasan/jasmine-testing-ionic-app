@@ -3,102 +3,122 @@
     {
       "id": "1",
       "content": "Ducunt volentem Fata, nolentem trahunt",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1462747772350-460bb4aad7f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     },
     {
       "id": "2",
       "content": "Quod licet Iovi, non licet bovi",
-      "work": "2"
+      "work": "2",
+      "image": "https://images.unsplash.com/reserve/unsplash_52d3d6f9853e9_1.JPG?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1463&q=80"
     },
     {
       "id": "3",
       "content": "Alea iacta est",
-      "work": "3"
+      "work": "3",
+      "image": "https://plus.unsplash.com/premium_photo-1661934916456-012cd9e98fc0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2189&q=80"
     },
     {
       "id": "4",
       "content": "Barba non facit philosophum",
-      "work": "4"
+      "work": "4",
+      "image": "https://images.unsplash.com/photo-1509024644558-2f56ce76c490?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
     },
     {
       "id": "5",
       "content": "Animum debes mutare non caelum",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1568542368937-3231dbde2662?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
     },
     {
       "id": "6",
       "content": "Artes serviunt vitae, sapientia imperat",
-      "work": "1"
+      "work": "1",
+      "image": "https://plus.unsplash.com/premium_photo-1661926757229-f45f031624c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1474&q=80"
     },
     {
       "id": "7",
       "content": "Facilius per partes in cognitionem totius adducimur",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1578352788318-9e83a90c3967?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
     },
     {
       "id": "8",
       "content": "Id bonum cura quod vetustate fit melius ",
-      "work": "1"
+      "work": "1",
+      "image": "https://plus.unsplash.com/premium_photo-1661911756283-fd0fbefee201?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
     },
     {
       "id": "9",
       "content": "Illi levia, hi falsa formidant, nos utraque",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1679697791160-69b1c1ca84bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1343&q=80"
     },
     {
       "id": "10",
       "content": "Quidquid facies, respice ad mortem",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1462747772350-460bb4aad7f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     },
     {
       "id": "11",
       "content": "Ducunt volentem Fata, nolentem trahunt",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/reserve/unsplash_52d3d6f9853e9_1.JPG?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1463&q=80"
     },
     {
       "id": "12",
       "content": "Quod licet Iovi, non licet bovi",
-      "work": "2"
+      "work": "2",
+      "image": "https://plus.unsplash.com/premium_photo-1661934916456-012cd9e98fc0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2189&q=80"
     },
     {
       "id": "13",
       "content": "Alea iacta est",
-      "work": "3"
+      "work": "3",
+      "image": "https://images.unsplash.com/photo-1509024644558-2f56ce76c490?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
     },
     {
       "id": "14",
       "content": "Barba non facit philosophum",
-      "work": "4"
+      "work": "4",
+      "image": "https://images.unsplash.com/photo-1568542368937-3231dbde2662?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
     },
     {
       "id": "15",
       "content": "Animum debes mutare non caelum",
-      "work": "1"
+      "work": "1",
+      "image": "https://plus.unsplash.com/premium_photo-1661926757229-f45f031624c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1474&q=80"
     },
     {
       "id": "16",
       "content": "Artes serviunt vitae, sapientia imperat",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1578352788318-9e83a90c3967?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
     },
     {
       "id": "17",
       "content": "Facilius per partes in cognitionem totius adducimur",
-      "work": "1"
+      "work": "1",
+      "image": "https://plus.unsplash.com/premium_photo-1661911756283-fd0fbefee201?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
     },
     {
       "id": "18",
       "content": "Id bonum cura quod vetustate fit melius ",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1679697791160-69b1c1ca84bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1343&q=80"
     },
     {
       "id": "19",
       "content": "Illi levia, hi falsa formidant, nos utraque",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/photo-1462747772350-460bb4aad7f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
     },
     {
       "id": "20",
       "content": "Quidquid facies, respice ad mortem",
-      "work": "1"
+      "work": "1",
+      "image": "https://images.unsplash.com/reserve/unsplash_52d3d6f9853e9_1.JPG?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1463&q=80"
     }
   ]
 }
