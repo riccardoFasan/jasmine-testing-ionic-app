@@ -12,11 +12,11 @@ import { Aphorism } from '@app/core/models';
 import {
   BehaviorSubject,
   Subject,
+  combineLatest,
   filter,
-  map,
+  switchMap,
   takeUntil,
   tap,
-  withLatestFrom,
 } from 'rxjs';
 import {
   InfiniteScrollCustomEvent,
@@ -101,12 +101,18 @@ export class ListComponent implements OnInit, OnDestroy {
     this.pageLoaded$
       .pipe(
         takeUntil(this.destroy$),
-        withLatestFrom(this.scrollEvent$, this.refreshEvent$),
-        map(([_, scrollEvent, refreshEvent]) => [scrollEvent, refreshEvent]),
-        tap(([scrollEvent, refreshEvent]) => {
-          if (scrollEvent) scrollEvent!.target.complete();
-          if (refreshEvent) refreshEvent!.target.complete();
-        })
+        switchMap(() =>
+          combineLatest([
+            this.refreshEvent$.pipe(
+              filter((event) => !!event),
+              tap((event: any) => event!.target!.complete())
+            ),
+            this.scrollEvent$.pipe(
+              filter((event) => !!event),
+              tap((event: any) => event!.target!.complete())
+            ),
+          ])
+        )
       )
       .subscribe();
   }
