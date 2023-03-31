@@ -4,11 +4,16 @@ import { AphorismsComponent } from './aphorisms.component';
 import { AphorismsStoreService } from '../../store';
 import { HttpClientModule } from '@angular/common/http';
 import { MOCK_PAGE, MOCK_QUERY } from 'src/mocks';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('AphorismsComponent', () => {
   let component: AphorismsComponent;
   let fixture: ComponentFixture<AphorismsComponent>;
   let store: AphorismsStoreService;
+  let searchbar: DebugElement;
+  let refresher: DebugElement;
+  let list: DebugElement;
 
   beforeEach(async () => {
     const storeServiceSpy: jasmine.SpyObj<AphorismsStoreService> =
@@ -32,13 +37,21 @@ describe('AphorismsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load a page of aphorisms on page change', () => {
-    component.onPageChange(MOCK_PAGE);
-    expect(store.getPage).toHaveBeenCalled();
+  it('should load a page of aphorisms on query change', () => {
+    searchbar = fixture.debugElement.query(By.css('app-search'));
+    searchbar.triggerEventHandler('queryChange', MOCK_QUERY);
+    expect(store.search).toHaveBeenCalledWith(MOCK_QUERY);
   });
 
-  it('should load a page of aphorisms on query change', () => {
-    component.onQueryChange(MOCK_QUERY);
-    expect(store.search).toHaveBeenCalledWith(MOCK_QUERY);
+  it('should load the fisrt page of aphorisms on page refresh', () => {
+    refresher = fixture.debugElement.query(By.css('app-refresher'));
+    refresher.triggerEventHandler('refresh');
+    expect(store.getPage).toHaveBeenCalledWith(1);
+  });
+
+  it('should load a page of aphorisms on page change', () => {
+    list = fixture.debugElement.query(By.css('app-list'));
+    list.triggerEventHandler('pageChange', MOCK_PAGE);
+    expect(store.getPage).toHaveBeenCalledWith(MOCK_PAGE);
   });
 });

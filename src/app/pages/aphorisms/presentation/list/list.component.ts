@@ -52,8 +52,12 @@ export class ListComponent implements OnInit, OnDestroy {
   @Input() count: number = 0;
   @Input() page: number = 0;
   @Input() pages: number = 0;
-  @Input() loading: boolean = false;
   @Input() pageSize: number = 0;
+
+  @Input() set loading(loading: boolean) {
+    if (loading) return;
+    this.pageLoaded$.next();
+  }
 
   @Input() set aphorisms(aphorismsPage: Aphorism[]) {
     if (!aphorismsPage) return;
@@ -64,7 +68,6 @@ export class ListComponent implements OnInit, OnDestroy {
       ),
     ];
     this.aphorisms$.next(aphorisms);
-    this.pageLoaded$.next();
   }
 
   @Input() set query(query: string) {
@@ -99,7 +102,7 @@ export class ListComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  onScroll(event: InfiniteScrollCustomEvent): void {
+  protected onScroll(event: InfiniteScrollCustomEvent): void {
     if (!this.canChangePage) return;
     this.scollEvent$.next(event);
     this.pageChange.emit(this.page + 1);

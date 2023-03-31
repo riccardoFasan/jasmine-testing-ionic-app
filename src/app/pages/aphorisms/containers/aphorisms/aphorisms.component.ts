@@ -5,12 +5,22 @@ import { AphorismsStoreService } from '../../store';
 import { provideComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { Aphorism } from '@app/core/models';
-import { ListComponent, SearchComponent } from '../../presentation';
+import {
+  ListComponent,
+  RefresherComponent,
+  SearchComponent,
+} from '../../presentation';
 
 @Component({
   selector: 'app-aphorisms',
   standalone: true,
-  imports: [IonicModule, CommonModule, SearchComponent, ListComponent],
+  imports: [
+    IonicModule,
+    CommonModule,
+    SearchComponent,
+    ListComponent,
+    RefresherComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideComponentStore(AphorismsStoreService)],
   template: `
@@ -38,12 +48,16 @@ import { ListComponent, SearchComponent } from '../../presentation';
       </ion-header>
 
       <ion-content class="ion-padding" [fullscreen]="true">
+        <app-refresher
+          [loading]="!!vm.loading"
+          (refresh)="onRefresh()"
+        ></app-refresher>
         <app-list
           [aphorisms]="vm.aphorisms!"
           [count]="vm.count!"
           [page]="vm.page!"
           [pages]="vm.pages!"
-          [loading]="vm.loading!"
+          [loading]="!!vm.loading"
           [pageSize]="vm.pageSize!"
           [query]="vm.query!"
           (pageChange)="onPageChange($event)"
@@ -64,11 +78,15 @@ export class AphorismsComponent {
   protected readonly page$: Observable<number> = this.store.page$;
   protected readonly pageSize$: Observable<number> = this.store.pageSize$;
 
-  onPageChange(page: number): void {
+  protected onPageChange(page: number): void {
     this.store.getPage(page);
   }
 
-  onQueryChange(query: string): void {
+  protected onQueryChange(query: string): void {
     this.store.search(query);
+  }
+
+  protected onRefresh(): void {
+    this.store.getPage(1);
   }
 }

@@ -91,7 +91,7 @@ export class ApiService {
 
         const matchQuery = (aphorism: Aphorism): boolean => {
           if (!searchCriteria.query) return true;
-          const query: string = searchCriteria.query.toLowerCase();
+          const query: string = searchCriteria.query.trim().toLowerCase();
 
           const content: string = aphorism.content.toLowerCase();
           if (content.includes(query)) return true;
