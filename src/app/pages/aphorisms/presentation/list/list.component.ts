@@ -22,28 +22,26 @@ import { CardComponent } from '../card/card.component';
   standalone: true,
   imports: [CommonModule, CardComponent, IonicModule],
   template: `
-    <ion-content>
-      <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
-      </ion-refresher>
-      <ng-container *ngIf="{ aphorisms: aphorisms$ | async } as vm">
-        <ion-spinner
-          *ngIf="loading && vm.aphorisms!.length === 0"
-          name="crescent"
-        ></ion-spinner>
-        <app-card
-          *ngFor="let aphorism of vm.aphorisms"
-          [aphorism]="aphorism"
-        ></app-card>
-        <ion-infinite-scroll
-          [disabled]="count === vm.aphorisms!.length"
-          (ionInfinite)="onScroll($any($event))"
-        >
-          <ion-infinite-scroll-content
-            loadingSpinner="crescent"
-          ></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ng-container>
-    </ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    </ion-refresher>
+    <ng-container *ngIf="{ aphorisms: aphorisms$ | async } as vm">
+      <ion-spinner
+        *ngIf="loading && vm.aphorisms!.length === 0"
+        name="crescent"
+      ></ion-spinner>
+      <app-card
+        *ngFor="let aphorism of vm.aphorisms"
+        [aphorism]="aphorism"
+      ></app-card>
+      <ion-infinite-scroll
+        [disabled]="count === vm.aphorisms!.length"
+        (ionInfinite)="onScroll($any($event))"
+      >
+        <ion-infinite-scroll-content
+          loadingSpinner="crescent"
+        ></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ng-container>
   `,
   styles: [
     `
