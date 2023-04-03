@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MOCK_QUERY } from 'src/mocks';
+import { MOCK_QUERY } from 'src/testing/mocks';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;

@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { AphorismsComponent } from './aphorisms.component';
 import { AphorismsStoreService } from '../../store';
 import { HttpClientModule } from '@angular/common/http';
-import { MOCK_PAGE, MOCK_QUERY } from 'src/mocks';
+import { MOCK_PAGE, MOCK_QUERY } from 'src/testing/mocks';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 

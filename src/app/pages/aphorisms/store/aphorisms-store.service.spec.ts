@@ -10,7 +10,7 @@ import {
   MOCK_INITIAL_APHORISMS_LIST,
   MOCK_INITIAL_SEARCH_CRITERIA,
   MOCK_SEARCH_CRITERIA,
-} from 'src/mocks';
+} from 'src/testing/mocks';
 
 describe('AphorismsStoreService initialization', () => {
   let service: AphorismsStoreService;

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MOCK_APHORISMS_LIST } from 'src/mocks';
+import { MOCK_APHORISMS_LIST } from 'src/testing/mocks';
 import { take } from 'rxjs';
 
 describe('ListComponent', () => {

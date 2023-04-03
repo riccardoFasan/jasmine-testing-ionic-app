@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
-  TestRequest,
 } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
 import {
@@ -10,57 +9,63 @@ import {
   MOCK_AUTHOR,
   MOCK_PAGINATED_LIST,
   MOCK_WORK,
-} from 'src/mocks';
-
-function expectAReuqest(
-  httpTestingController: HttpTestingController,
-  service: ApiService,
-  url: string,
-  method: string,
-  mockResponse: any
-): void {
-  const request: TestRequest = httpTestingController.expectOne(
-    `${service.baseUrl}/${url}`
-  );
-
-  expect(request.request.method).toBe(method);
-  request.flush(mockResponse);
-}
+} from 'src/testing/mocks';
+import { expectARequest } from 'src/testing/helpers';
 
 function expectAnAuthorRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  expectAReuqest(httpTestingController, service, 'authors.json', 'GET', {
-    authors: [MOCK_AUTHOR],
-  });
+  expectARequest(
+    httpTestingController,
+    `${service.baseUrl}/authors.json`,
+    'GET',
+    {
+      authors: [MOCK_AUTHOR],
+    }
+  );
 }
 
 function expectAWorkRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  expectAReuqest(httpTestingController, service, 'works.json', 'GET', {
-    works: [MOCK_WORK],
-  });
+  expectARequest(
+    httpTestingController,
+    `${service.baseUrl}/works.json`,
+    'GET',
+    {
+      works: [MOCK_WORK],
+    }
+  );
 }
 
 function expectAnAphorismRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  expectAReuqest(httpTestingController, service, 'aphorisms.json', 'GET', {
-    aphorisms: [MOCK_APHORISM],
-  });
+  expectARequest(
+    httpTestingController,
+    `${service.baseUrl}/aphorisms.json`,
+    'GET',
+    {
+      aphorisms: [MOCK_APHORISM],
+    }
+  );
 }
 
 function expectAnUpdateAphorismRequest(
   httpTestingController: HttpTestingController,
   service: ApiService
 ): void {
-  expectAReuqest(httpTestingController, service, 'aphorisms.json', 'PUT', {
-    aphorisms: [MOCK_APHORISM],
-  });
+  expectARequest(
+    httpTestingController,
+    `${service.baseUrl}/aphorisms.json`,
+    'PUT',
+    {
+      aphorisms: [MOCK_APHORISM],
+    }
+  );
 }
 
 describe('ApiService http request methods', () => {
