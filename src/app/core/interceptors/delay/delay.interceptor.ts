@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable, take, timer, switchMap } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 
 @Injectable()
 export class DelayInterceptor implements HttpInterceptor {
@@ -17,10 +17,6 @@ export class DelayInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const shouldDelay: boolean =
       request.url.includes('localhost') && request.url.includes('json');
-    if (!shouldDelay) return next.handle(request);
-    return timer(this.delay).pipe(
-      take(1),
-      switchMap(() => next.handle(request))
-    );
+    return next.handle(request).pipe(delay(shouldDelay ? this.delay : 0));
   }
 }
