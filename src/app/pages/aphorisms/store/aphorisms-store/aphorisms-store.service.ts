@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { ComponentStore, OnStoreInit } from '@ngrx/component-store';
-import { AphorismsState, INITIAL_APHORISMS_STATE } from '../state';
+import { AphorismsState, INITIAL_APHORISMS_STATE } from '../../state';
 import { Observable, pipe, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Aphorism, PaginatedList, SearchCriteria } from '@app/core/models';
 import { ApiService } from '@app/core/services';

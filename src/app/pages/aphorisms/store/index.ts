@@ -1,1 +1,1 @@
-export * from './aphorisms-store.service';
+export * from './aphorisms-store/aphorisms-store.service';
