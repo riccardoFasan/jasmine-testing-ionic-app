@@ -82,4 +82,38 @@ describe('ListComponent', () => {
     refresher.triggerEventHandler('ionRefresh');
     expect(changeSpy).toHaveBeenCalledWith(1);
   });
+
+  it('should display the ion spinner when is loading and have no aphorisms', () => {
+    component.loading = true;
+    component.aphorisms = [];
+    fixture.detectChanges();
+    const spinner: DebugElement = fixture.debugElement.query(
+      By.css('ion-spinner')
+    );
+    expect(spinner).toBeTruthy();
+  });
+
+  it('should not display the ion spinner when is loading or have some aphorisms', () => {
+    component.loading = true;
+    component.aphorisms = MOCK_APHORISMS_LIST.items;
+    fixture.detectChanges();
+    const spinner: DebugElement = fixture.debugElement.query(
+      By.css('ion-spinner')
+    );
+    expect(spinner).toBeFalsy();
+
+    component.loading = false;
+    component.aphorisms = [];
+    fixture.detectChanges();
+    expect(spinner).toBeFalsy();
+  });
+
+  it('should display a card for any aphorism', () => {
+    component.aphorisms = MOCK_APHORISMS_LIST.items;
+    fixture.detectChanges();
+    const cards: DebugElement[] = fixture.debugElement.queryAll(
+      By.css('ion-card')
+    );
+    expect(cards.length).toBe(MOCK_APHORISMS_LIST.items.length);
+  });
 });
